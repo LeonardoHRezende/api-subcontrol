@@ -7,15 +7,18 @@ import { UserPrismaRepository } from '../users/repositories/prisma-user.reposito
 
 // Use Cases
 import { CreateUserUseCase } from '../users/aplication/usecases/create-user.usecase';
+import { FindByIdUserUseCase } from '../users/aplication/usecases/findbyid.usecase';
 
 @Module({
   controllers: [UsersController],
   providers: [
     UsersService,
-    UserPrismaRepository,
-
-    // UseCases
+    {
+      provide: 'UserRepository',
+      useClass: UserPrismaRepository,
+    },
     CreateUserUseCase,
+    FindByIdUserUseCase,
   ],
 })
 export class UsersModule {}

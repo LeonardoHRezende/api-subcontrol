@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Roles } from '../enums/roles';
 import { randomUUID } from 'crypto';
 
@@ -78,4 +79,53 @@ export class UserEntity {
       updated_at: this.updatedAt,
     };
   }
+}
+
+export class CreateUserDto {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty()
+  fullName: string;
+
+  @ApiProperty()
+  email: string;
+
+  @ApiProperty()
+  companyName: string;
+
+  @ApiProperty({
+    enum: Roles,
+    enumName: 'Roles',
+  })
+  role: Roles;
+}
+
+export class GetUserDto {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty()
+  fullName: string;
+
+  @ApiProperty()
+  email: string;
+
+  @ApiProperty()
+  companyId: string;
+
+  @ApiProperty()
+  companyName: string;
+
+  @ApiProperty({
+    enum: Roles,
+    enumName: 'Roles',
+  })
+  role: Roles;
+
+  @ApiProperty({ type: String, format: 'date-time' })
+  createdAt: Date;
+
+  @ApiProperty({ type: String, format: 'date-time' })
+  updatedAt: Date;
 }
