@@ -7,7 +7,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instala dependências sem cache do npm (pra não salvar lixo)
-RUN npm ci --omit=dev
+ENV NODE_ENV=prod
+RUN npm ci
 
 # Copia o resto do projeto
 COPY . .
