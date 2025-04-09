@@ -6,9 +6,11 @@ WORKDIR /app
 # Copia apenas os arquivos necessários para instalar dependências
 COPY package*.json ./
 
-# Instala dependências sem cache do npm (pra não salvar lixo)
 ENV NODE_ENV=prod
-RUN npm ci
+# Adiciona build tools temporariamente
+RUN apk add --no-cache python3 make g++ \
+  && npm ci \
+  && apk del python3 make g++
 
 # Copia o resto do projeto
 COPY . .
