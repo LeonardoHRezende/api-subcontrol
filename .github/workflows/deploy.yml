@@ -44,5 +44,6 @@ jobs:
             sed -i "s|NODE_ENV=.*|NODE_ENV=prod|" .env
             sed -i "s|PORT=.*|PORT=3333|" .env
 
-            docker-compose pull
-            docker-compose up -d --remove-orphans
+            docker-compose -f docker-compose.prod.yml pull
+            docker-compose -f docker-compose.prod.yml up -d --remove-orphans
+
