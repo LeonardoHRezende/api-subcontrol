@@ -8,10 +8,7 @@ COPY package*.json ./
 
 ENV NODE_ENV=prod
 # Adiciona build tools temporariamente
-RUN apk add --no-cache python3 make g++ \
-  && npm ci \
-  && apk del python3 make g++
-
+RUN npm install --prefer-online
 # Copia o resto do projeto
 COPY . .
 
