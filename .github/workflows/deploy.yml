@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE_NAME: task-forge
+      IMAGE_NAME: subcontrol-api
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
     
     steps:
@@ -33,7 +33,7 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /home/ubuntu/api-task-forge
+            cd /home/ubuntu/api-subcontrol
             git pull origin main
 
             # Cria o .env com base no exemplo
