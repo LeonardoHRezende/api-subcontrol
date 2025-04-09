@@ -76,12 +76,6 @@ export class GetUserDto {
   @ApiProperty()
   email: string;
 
-  @ApiProperty()
-  companyId: string;
-
-  @ApiProperty()
-  companyName: string;
-
   @ApiProperty({ type: String, format: 'date-time' })
   createdAt: Date;
 
