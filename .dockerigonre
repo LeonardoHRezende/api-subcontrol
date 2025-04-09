@@ -1,3 +1,5 @@
 node_modules
 dist
 .git
+.npm
+.pnpm-store

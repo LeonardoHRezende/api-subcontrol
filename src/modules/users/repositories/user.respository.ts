@@ -21,11 +21,6 @@ export class UserRepository implements IUserRepository {
     return Promise.resolve(user);
   }
 
-  findByCompanyId(companyId: string): Promise<UserEntity[]> {
-    const users = this.users.filter((user) => user.companyId === companyId);
-    return Promise.resolve(users);
-  }
-
   create(user: UserEntity): Promise<void> {
     this.users.push(user);
     return Promise.resolve();
