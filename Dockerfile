@@ -1,23 +1,30 @@
-# Use uma imagem oficial do Node como base
-FROM node:18
+# Stage 1: Build
+FROM node:18-alpine AS builder
 
-# Cria e entra na pasta do app
 WORKDIR /app
 
-# Copia os arquivos do projeto
+# Copia apenas os arquivos necessários para instalar dependências
 COPY package*.json ./
 
-# Instala dependências
-RUN npm install
+# Instala dependências sem cache do npm (pra não salvar lixo)
+RUN npm ci --omit=dev
 
-# Copia o restante do projeto
+# Copia o resto do projeto
 COPY . .
 
-# Gera os arquivos JS a partir do TypeScript
+# Gera os arquivos JS
 RUN npm run build
 
-# Expõe a porta usada pelo Nest
+# Stage 2: Production
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copia apenas o que é necessário pra rodar a app
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+
 EXPOSE 3333
 
-# Comando padrão
-CMD ["npm", "run", "start:prod"]
+CMD ["node", "dist/main"]
