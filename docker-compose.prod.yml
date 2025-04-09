@@ -10,7 +10,7 @@ services:
       - .env
     ports:
       - "${PORT}:${PORT}"
-    command: npm run start:${NODE_ENV}
+    command: sh -c "npx prisma migrate deploy && npm run start:${NODE_ENV}"
     environment:
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
