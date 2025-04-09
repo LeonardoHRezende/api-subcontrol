@@ -13,12 +13,6 @@ RUN npm install
 # Copia o restante do projeto
 COPY . .
 
-# Instala o Prisma
-RUN npx prisma generate
-
-# Aplica as migrations em produção
-RUN npx prisma migrate deploy
-
 # Gera os arquivos JS a partir do TypeScript
 RUN npm run build
 
