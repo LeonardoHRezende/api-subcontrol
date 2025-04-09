@@ -20,7 +20,6 @@ export class UsersController {
     type: GetUserDto,
   })
   async findById(@Param('id') id: string): Promise<GetUserDto> {
-    console.log(id)
     return this.usersService.findById(id);
   }
 }

@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder, OpenAPIObject } from '@nestjs/swagger';
-import e from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,6 +15,7 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
   app.enableCors();
 
-  await app.listen(3333);
+  await app.listen(process.env.PORT || 3333);
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

@@ -13,22 +13,23 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  # nest-app:
-  #   build:
-  #     context: .
-  #   container_name: nest-app
-  #   depends_on:
-  #     - db
-  #   env_file:
-  #     - .env # ou .env.production se for produção
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - .:/app
-  #     - /app/node_modules
-  #   command: npm run start:dev # sobrescreve o CMD do Dockerfile em dev
-  #   environment:
-  #     - NODE_ENV=development
+  nest-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nest-app
+    depends_on:
+      - db
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run start:${NODE_ENV}
+    environment:
+      - NODE_ENV=${NODE_ENV}
 
 volumes:
   postgres_data:
