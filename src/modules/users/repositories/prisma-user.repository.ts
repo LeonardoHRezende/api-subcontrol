@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { IUserRepository } from './user.respository';
 import { UserEntity } from '../domain/entities/user.entity';
-import { Roles } from '../domain/enums/roles';
 
 export class UserPrismaRepository implements IUserRepository {
   private prisma: PrismaClient;
@@ -14,38 +13,18 @@ export class UserPrismaRepository implements IUserRepository {
     const user = await this.prisma.accounts.findUnique({
       where: { email },
     });
-    return user
-      ? new UserEntity({
-          ...user,
-          role: user.role as Roles,
-        })
-      : null;
+    if (!user) return null;
+    return new UserEntity(user);
   }
 
   async findById(id: string): Promise<UserEntity | null> {
     const user = await this.prisma.accounts.findUnique({
       where: { id },
     });
-    return user
-      ? new UserEntity({
-          ...user,
-          role: user.role as Roles,
-        })
-      : null;
-  }
 
-  async findByCompanyId(companyId: string): Promise<UserEntity[]> {
-    const users = await this.prisma.accounts.findMany({
-      where: { companyId },
-    });
+    if (!user) return null;
 
-    return users.map(
-      (user) =>
-        new UserEntity({
-          ...user,
-          role: user.role as Roles,
-        }),
-    );
+    return new UserEntity(user);
   }
 
   async create(user: UserEntity): Promise<void> {
@@ -54,21 +33,8 @@ export class UserPrismaRepository implements IUserRepository {
         id: user.id,
         email: user.email,
         fullName: user.fullName,
-        companyName: user.companyName,
-        role: user.role,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
-        company: {
-          connectOrCreate: {
-            where: {
-              id: user.companyId,
-            },
-            create: {
-              id: user.companyId,
-              name: user.companyName,
-            },
-          },
-        },
       },
     });
   }
@@ -79,7 +45,6 @@ export class UserPrismaRepository implements IUserRepository {
       data: {
         email: user.email,
         fullName: user.fullName,
-        companyId: user.companyId,
         updatedAt: user.updatedAt,
       },
     });

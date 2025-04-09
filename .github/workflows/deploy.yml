@@ -36,14 +36,15 @@ jobs:
             cd /home/ubuntu/api-subcontrol
             git pull origin main
 
-            # Cria o .env com base no exemplo
-            cp .env.example .env
+            echo "🧹 Limpando imagens e containers antigos..."
+            docker system prune -a -f --volumes
 
-            # Substitui as variáveis no .env
+            echo "📁 Atualizando .env"
+            cp .env.example .env
             sed -i "s|DATABASE_URL=.*|DATABASE_URL=${{ secrets.DATABASE_URL }}|" .env
             sed -i "s|NODE_ENV=.*|NODE_ENV=prod|" .env
             sed -i "s|PORT=.*|PORT=3333|" .env
 
+            echo "🚀 Subindo containers..."
             docker-compose -f docker-compose.prod.yml pull
             docker-compose -f docker-compose.prod.yml up -d --remove-orphans
-

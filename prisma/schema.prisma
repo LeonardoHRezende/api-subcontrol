@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -11,29 +12,7 @@ model accounts {
   id          String @id @default(uuid()) @db.Uuid
   fullName    String @map("full_name")
   email       String @unique
-  companyName String @map("company_name")
-
-  companyId String     @db.Uuid @map("company_id")
-  company   companies @relation(fields: [companyId], references: [id])
-
-  role      Role
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
-}
-
-model companies {
-  id       String @id @default(uuid()) @db.Uuid
-  name     String
-  document String? @unique
-
-  accounts accounts[]
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
-}
-
-enum Role {
-  OWNER
-  ADMIN
-  WORKER
 }

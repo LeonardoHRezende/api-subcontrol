@@ -3,7 +3,6 @@ import { UserEntity } from '../domain/entities/user.entity';
 export interface IUserRepository {
   findByEmail(email: string): Promise<UserEntity | null>;
   findById(id: string): Promise<UserEntity | null>;
-  findByCompanyId(companyId: string): Promise<UserEntity[]>;
   create(user: UserEntity): Promise<void>;
   update(user: UserEntity): Promise<void>;
   delete(id: string): Promise<void>;
