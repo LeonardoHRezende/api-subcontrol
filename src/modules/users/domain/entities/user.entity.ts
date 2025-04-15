@@ -47,10 +47,10 @@ export class UserEntity {
   toObject() {
     return {
       id: this.id,
-      full_name: this.fullName,
+      fullName: this.fullName,
       email: this.email,
-      created_at: this.createdAt,
-      updated_at: this.updatedAt,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }
