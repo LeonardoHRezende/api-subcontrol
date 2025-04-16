@@ -1,0 +1,17 @@
+export enum PlatformCategory {
+  SOCIAL,
+  STREAMING,
+  GAMING,
+  PRODUCTIVITY,
+  MUSIC,
+  NEWS,
+  EDUCATION,
+  TRAVEL,
+  FOOD,
+  SECURITY,
+  INVESTMENT,
+  ENTERTAINMENT,
+  HEALTH,
+  ADULT,
+  OTHER,
+}

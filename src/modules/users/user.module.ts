@@ -7,7 +7,9 @@ import { UserPrismaRepository } from '../users/repositories/prisma-user.reposito
 
 // Use Cases
 import { CreateUserUseCase } from '../users/aplication/usecases/create-user.usecase';
-import { FindByIdUserUseCase } from '../users/aplication/usecases/findbyid.usecase';
+import { FindByIdUserUseCase } from './aplication/usecases/findbyid-user.usecase';
+import { UpdateUserUseCase } from './aplication/usecases/update-user.usecas';
+import { DeleteUserUseCase } from './aplication/usecases/delete-user.usecase';
 
 @Module({
   controllers: [UsersController],
@@ -19,6 +21,8 @@ import { FindByIdUserUseCase } from '../users/aplication/usecases/findbyid.useca
     },
     CreateUserUseCase,
     FindByIdUserUseCase,
+    UpdateUserUseCase,
+    DeleteUserUseCase,
   ],
 })
 export class UsersModule {}
