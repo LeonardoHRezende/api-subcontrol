@@ -10,6 +10,7 @@ import { CreateUserUseCase } from '../users/aplication/usecases/create-user.usec
 import { FindByIdUserUseCase } from './aplication/usecases/findbyid-user.usecase';
 import { UpdateUserUseCase } from './aplication/usecases/update-user.usecas';
 import { DeleteUserUseCase } from './aplication/usecases/delete-user.usecase';
+import { FindByEmailUserUseCase } from './aplication/usecases/findbyemail-user.usecase copy';
 
 @Module({
   controllers: [UsersController],
@@ -23,6 +24,7 @@ import { DeleteUserUseCase } from './aplication/usecases/delete-user.usecase';
     FindByIdUserUseCase,
     UpdateUserUseCase,
     DeleteUserUseCase,
+    FindByEmailUserUseCase,
   ],
 })
 export class UsersModule {}

@@ -6,10 +6,10 @@ import { PlatformEntity } from '../../domain/entities/platform.entity';
 export class FindByIdPlatformUseCase {
   constructor(
     @Inject('PlatformRepository')
-    private readonly userRepository: PlatformRepository,
+    private readonly platformRepository: PlatformRepository,
   ) {}
 
   async execute(platformId: string): Promise<PlatformEntity | null> {
-    return await this.userRepository.findById(platformId);
+    return await this.platformRepository.findById(platformId);
   }
 }

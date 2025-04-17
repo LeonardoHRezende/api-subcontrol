@@ -33,7 +33,9 @@ export class PlatformPrismaRepository implements IPlatformRepository {
 
   async create(platform: PlatformEntity): Promise<void> {
     await this.prisma.platforms.create({
-      data: { ...platform.toObject() },
+      data: {
+        ...platform.toObject(),
+      },
     });
   }
 
@@ -70,7 +72,7 @@ export class PlatformPrismaRepository implements IPlatformRepository {
   async findHistoricalPriceByPlatformId(
     platformId: string,
   ): Promise<HistoryPriceEntity[] | null> {
-    const prices = await this.prisma.platforms.findMany({
+    const prices = await this.prisma.platforms_history_prices.findMany({
       where: { platformId },
       orderBy: { date: 'desc' },
     });
@@ -79,8 +81,8 @@ export class PlatformPrismaRepository implements IPlatformRepository {
       (p) =>
         new HistoryPriceEntity({
           id: p.id,
-          monthlyPrice: p.monthlyPrice,
-          yearlyPrice: p.yearlyPrice,
+          monthlyPrice: p?.monthlyPrice || 0,
+          yearlyPrice: p?.yearlyPrice || 0,
           date: p.date,
           createdAt: p.createdAt,
           updatedAt: p.updatedAt,

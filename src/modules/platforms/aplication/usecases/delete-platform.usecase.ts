@@ -5,10 +5,10 @@ import { PlatformRepository } from '../../repositories/platform.respository';
 export class DeletePlatformUseCase {
   constructor(
     @Inject('PlatformRepository')
-    private readonly userRepository: PlatformRepository,
+    private readonly platformRepository: PlatformRepository,
   ) {}
 
   async execute(platformId: string): Promise<void> {
-    return await this.userRepository.delete(platformId);
+    return await this.platformRepository.delete(platformId);
   }
 }

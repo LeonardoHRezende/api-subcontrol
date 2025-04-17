@@ -6,10 +6,10 @@ import { PlatformEntity } from '../../domain/entities/platform.entity';
 export class UpdatePlatformUseCase {
   constructor(
     @Inject('PlatformRepository')
-    private readonly userRepository: PlatformRepository,
+    private readonly platformRepository: PlatformRepository,
   ) {}
 
   async execute(platform: PlatformEntity): Promise<void> {
-    return await this.userRepository.update(platform);
+    return await this.platformRepository.update(platform);
   }
 }

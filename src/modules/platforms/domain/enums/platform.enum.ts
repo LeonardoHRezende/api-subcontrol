@@ -1,17 +1,18 @@
-export enum PlatformCategory {
-  SOCIAL,
-  STREAMING,
-  GAMING,
-  PRODUCTIVITY,
-  MUSIC,
-  NEWS,
-  EDUCATION,
-  TRAVEL,
-  FOOD,
-  SECURITY,
-  INVESTMENT,
-  ENTERTAINMENT,
-  HEALTH,
-  ADULT,
-  OTHER,
-}
+export type PlatformCategory =
+  | 'SOCIAL'
+  | 'STREAMING'
+  | 'GAMING'
+  | 'PRODUCTIVITY'
+  | 'MUSIC'
+  | 'NEWS'
+  | 'EDUCATION'
+  | 'TRAVEL'
+  | 'FOOD'
+  | 'SECURITY'
+  | 'INVESTMENT'
+  | 'ENTERTAINMENT'
+  | 'HEALTH'
+  | 'ADULT'
+  | 'FITNESS'
+  | 'SHOPPING'
+  | 'OTHER';

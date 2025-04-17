@@ -1,15 +1,15 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { PlatformRepository } from '../../repositories/platform.respository';
-import { PlatformEntity } from '../../domain/entities/platform.entity';
+import { HistoryPriceEntity } from '../../domain/entities/history_price.entity';
 
 @Injectable()
-export class CreatePlatformUseCase {
+export class UpdatePricesUseCase {
   constructor(
     @Inject('PlatformRepository')
     private readonly platformRepository: PlatformRepository,
   ) {}
 
-  async execute(platform: PlatformEntity): Promise<void> {
-    return await this.platformRepository.create(platform);
+  async execute(prices: HistoryPriceEntity): Promise<void> {
+    return await this.platformRepository.updateHistoricalPrice(prices);
   }
 }

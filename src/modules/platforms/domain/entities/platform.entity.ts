@@ -1,10 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { randomUUID } from 'crypto';
+import { PlatformCategory } from '../enums/platform.enum';
 
 export interface PlatformProps {
   id?: string;
   name: string;
-  category: string;
+  category: PlatformCategory;
   imageUrl: string;
   websiteUrl: string;
   createdAt?: Date;
@@ -15,7 +16,7 @@ export interface PlatformProps {
 export class PlatformEntity {
   id: string;
   name: string;
-  category: string;
+  category: PlatformCategory;
   imageUrl: string;
   websiteUrl: string;
   createdAt: Date;
@@ -39,7 +40,7 @@ export class PlatformEntity {
   get Name(): string {
     return this.name;
   }
-  get Category(): string {
+  get Category(): PlatformCategory {
     return this.category;
   }
   get ImageUrl(): string {
@@ -80,7 +81,7 @@ export class PlatformDTO {
   name: string;
 
   @ApiProperty()
-  category: string;
+  category: PlatformCategory;
 
   @ApiProperty()
   imageUrl: string;
