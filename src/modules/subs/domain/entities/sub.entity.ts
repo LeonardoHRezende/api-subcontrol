@@ -1,0 +1,144 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { randomUUID } from 'crypto';
+import { SubRecurrence, SubStatus } from '../enums/sub.enum';
+
+export interface SubscriptionProps {
+  id?: string;
+  accountId: string;
+  platformsId?: string;
+  plan: string;
+  tag?: string;
+  recurrence: SubRecurrence;
+  status: SubStatus;
+  startDate: Date;
+  canceledAt?: Date;
+  updatedAt?: Date;
+  createdAt?: Date;
+}
+
+export class SubscriptionEntity {
+  id?: string;
+  accountId: string;
+  platformsId?: string;
+  plan: string;
+  tag?: string;
+  recurrence: SubRecurrence;
+  status: SubStatus;
+  startDate: Date;
+  canceledAt?: Date;
+  updatedAt?: Date;
+  createdAt?: Date;
+
+  constructor(props: SubscriptionProps) {
+    this.id = props?.id ?? randomUUID();
+    this.accountId = props?.accountId;
+    this.platformsId = props?.platformsId;
+    this.plan = props?.plan;
+    this.tag = props?.tag;
+    this.recurrence = props?.recurrence ?? 'MONTHLY';
+    this.status = props?.status ?? 'ACTIVE';
+    this.startDate = props?.startDate;
+    this.canceledAt = props?.canceledAt;
+    this.updatedAt = props?.updatedAt;
+  }
+
+  get Id(): string {
+    return this?.id ?? randomUUID();
+  }
+
+  get Plan(): string {
+    return this.plan;
+  }
+
+  get Recurrence(): SubRecurrence {
+    return this.recurrence ?? 'MONTHLY';
+  }
+
+  get Status(): SubStatus {
+    return this.status ?? 'ACTIVE';
+  }
+
+  get StartDate(): Date {
+    return this.startDate ?? new Date();
+  }
+
+  get CanceledAt(): Date {
+    return this.canceledAt ?? new Date();
+  }
+
+  get UpdatedAt(): Date {
+    return this.updatedAt ?? new Date();
+  }
+
+  get CreatedAt(): Date {
+    return this.createdAt ?? new Date();
+  }
+
+  get Tag(): string {
+    return this.tag ?? '';
+  }
+
+  get AccountId(): string {
+    return this.accountId;
+  }
+
+  get PlatformsId(): string {
+    return this.platformsId ?? '';
+  }
+
+  cancelSubscription(): void {
+    this.status = 'CANCELED';
+    this.canceledAt = new Date();
+  }
+
+  toObject(): SubscriptionProps {
+    return {
+      id: this.id,
+      accountId: this.accountId,
+      platformsId: this.platformsId,
+      plan: this.plan,
+      tag: this.tag,
+      recurrence: this.recurrence,
+      status: this.status,
+      startDate: this.startDate,
+      canceledAt: this.canceledAt,
+      updatedAt: this.updatedAt,
+      createdAt: this.createdAt,
+    };
+  }
+}
+
+export class SubscriptionDTO {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty()
+  accountId: string;
+
+  @ApiProperty()
+  platformsId: string;
+
+  @ApiProperty()
+  plan: string;
+
+  @ApiProperty()
+  tag: string;
+
+  @ApiProperty()
+  recurrence: SubRecurrence;
+
+  @ApiProperty()
+  status: SubStatus;
+
+  @ApiProperty()
+  startDate: Date;
+
+  @ApiProperty()
+  canceledAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
+
+  @ApiProperty()
+  createdAt: Date;
+}

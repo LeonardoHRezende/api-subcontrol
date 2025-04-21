@@ -22,7 +22,7 @@ model subscriptions {
   id         String     @id @default(uuid()) @db.Uuid
   plan       String
   recurrence RECURRENCE
-  status     String
+  status     STATUS
   startDate  DateTime   @map("start_date") @db.Timestamptz(6)
   tag        String?    @db.VarChar(100)
   canceledAt DateTime?  @map("canceled_at") @db.Timestamptz(6)
@@ -63,6 +63,12 @@ model platforms_history_prices {
 
   platformId String    @map("platform_id") @db.Uuid
   platforms  platforms @relation(fields: [platformId], references: [id], onDelete: Cascade)
+}
+
+enum STATUS {
+  ACTIVE
+  WARNING
+  CANCELED
 }
 
 enum RECURRENCE {
