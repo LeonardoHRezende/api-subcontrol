@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { SubsService } from './subs.service';
 import { SubscriptionDTO } from './domain/entities/sub.entity';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('subs')
 export class SubsController {
@@ -31,11 +32,21 @@ export class SubsController {
   }
 
   @Get(':id')
+  @ApiResponse({
+    status: 200,
+    description: 'Subscrição encontrada com sucesso',
+    type: SubscriptionDTO,
+  })
   async findUnique(@Param('id') id: string) {
     return this.subsService.findUnique(id);
   }
 
   @Get()
+  @ApiResponse({
+    status: 200,
+    description: 'Subscrições encontradas com sucesso',
+    type: [SubscriptionDTO],
+  })
   async list(@Query('userId') userId: string) {
     return this.subsService.list(userId);
   }
