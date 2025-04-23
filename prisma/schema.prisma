@@ -9,11 +9,13 @@ datasource db {
 }
 
 model accounts {
-  id        String   @id @default(uuid()) @db.Uuid
-  fullName  String   @map("full_name")
-  email     String   @unique
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  id                String   @id @default(uuid()) @db.Uuid
+  fullName          String   @map("full_name")
+  email             String   @unique
+  termsAccepted     Boolean  @default(false) @map("terms_accepted")
+  termsAcceptedAt   DateTime? @map("terms_accepted_at") @db.Timestamptz(6)
+  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   subscriptions subscriptions[]
 }
