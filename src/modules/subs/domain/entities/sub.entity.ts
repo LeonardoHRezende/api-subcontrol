@@ -121,24 +121,61 @@ export class SubscriptionDTO {
   @ApiProperty()
   plan: string;
 
-  @ApiProperty()
-  tag: string;
+  @ApiProperty({ required: false })
+  tag?: string;
 
-  @ApiProperty()
+  @ApiProperty({ enum: ['MONTHLY', 'YEARLY'] })
   recurrence: SubRecurrence;
 
-  @ApiProperty()
+  @ApiProperty({ enum: ['ACTIVE', 'WARNING', 'CANCELED'] })
   status: SubStatus;
 
   @ApiProperty()
   startDate: Date;
 
-  @ApiProperty()
-  canceledAt: Date;
+  @ApiProperty({ required: false, nullable: true })
+  canceledAt?: Date;
 
-  @ApiProperty()
-  updatedAt: Date;
+  @ApiProperty({ required: false })
+  updatedAt?: Date;
 
-  @ApiProperty()
-  createdAt: Date;
+  @ApiProperty({ required: false })
+  createdAt?: Date;
+}
+
+export class UpdateSubscriptionDTO {
+  @ApiProperty({ required: false })
+  id?: string;
+
+  @ApiProperty({ required: false })
+  accountId?: string;
+
+  @ApiProperty({ required: false })
+  platformsId?: string;
+
+  @ApiProperty({ required: false })
+  plan?: string;
+
+  @ApiProperty({ required: false })
+  tag?: string;
+
+  @ApiProperty({ enum: ['MONTHLY', 'YEARLY'], required: false })
+  recurrence?: SubRecurrence;
+
+  @ApiProperty({ enum: ['ACTIVE', 'WARNING', 'CANCELED'], required: false })
+  status?: SubStatus;
+
+  @ApiProperty({ required: false })
+  startDate?: Date;
+}
+
+export class CancelSubscriptionDTO {
+  @ApiProperty({ required: false })
+  id?: string;
+
+  @ApiProperty({
+    required: false,
+    description: 'Motivo opcional para o cancelamento da assinatura',
+  })
+  cancelReason?: string;
 }
