@@ -1,11 +1,14 @@
 import { HistoryPriceEntity } from '../domain/entities/history_price.entity';
 import { PlatformEntity } from '../domain/entities/platform.entity';
+import { PlatformCategory } from '../domain/enums/platform.enum';
 
 export interface IPlatformRepository {
   findById(id: string): Promise<PlatformEntity | null>;
   create(platform: PlatformEntity): Promise<void>;
   update(platform: PlatformEntity): Promise<void>;
   delete(id: string): Promise<void>;
+  searchByName(name: string): Promise<PlatformEntity[]>;
+  filterByCategory(category: PlatformCategory): Promise<PlatformEntity[]>;
 
   createHistoricalPrice(historicalPrice: HistoryPriceEntity): Promise<void>;
   findHistoricalPriceByPlatformId(
@@ -43,6 +46,20 @@ export class PlatformRepository implements IPlatformRepository {
     this.historicalPrices = this.historicalPrices.filter(
       (price) => price.PlatformId !== id,
     );
+  }
+
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async searchByName(name: string): Promise<PlatformEntity[]> {
+    return this.platforms.filter((platform) =>
+      platform.Name.toLowerCase().includes(name.toLowerCase()),
+    );
+  }
+
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async filterByCategory(
+    category: PlatformCategory,
+  ): Promise<PlatformEntity[]> {
+    return this.platforms.filter((platform) => platform.Category === category);
   }
 
   // eslint-disable-next-line @typescript-eslint/require-await

@@ -4,6 +4,7 @@ import { prisma } from '../../../shared/prisma.client';
 import { IPlatformRepository } from './platform.respository';
 import { PlatformEntity } from '../domain/entities/platform.entity';
 import { HistoryPriceEntity } from '../domain/entities/history_price.entity';
+import { PlatformCategory } from '../domain/enums/platform.enum';
 
 export class PlatformPrismaRepository implements IPlatformRepository {
   private prisma: PrismaClient;
@@ -29,6 +30,55 @@ export class PlatformPrismaRepository implements IPlatformRepository {
       updatedAt: platform.updatedAt,
       canceledAt: platform.canceledAt!,
     });
+  }
+
+  async searchByName(name: string): Promise<PlatformEntity[]> {
+    const platforms = await this.prisma.platforms.findMany({
+      where: {
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return platforms.map(
+      (platform) =>
+        new PlatformEntity({
+          id: platform.id,
+          name: platform.name,
+          category: platform.category as PlatformCategory,
+          imageUrl: platform.imageUrl,
+          websiteUrl: platform.websiteUrl,
+          createdAt: platform.createdAt,
+          updatedAt: platform.updatedAt,
+          canceledAt: platform.canceledAt!,
+        }),
+    );
+  }
+
+  async filterByCategory(
+    category: PlatformCategory,
+  ): Promise<PlatformEntity[]> {
+    const platforms = await this.prisma.platforms.findMany({
+      where: {
+        category,
+      },
+    });
+
+    return platforms.map(
+      (platform) =>
+        new PlatformEntity({
+          id: platform.id,
+          name: platform.name,
+          category: platform.category as PlatformCategory,
+          imageUrl: platform.imageUrl,
+          websiteUrl: platform.websiteUrl,
+          createdAt: platform.createdAt,
+          updatedAt: platform.updatedAt,
+          canceledAt: platform.canceledAt!,
+        }),
+    );
   }
 
   async create(platform: PlatformEntity): Promise<void> {

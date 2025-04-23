@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { CreatePlatformUseCase } from './aplication/usecases/create-platform.usecase';
 import { UpdatePlatformUseCase } from './aplication/usecases/update-platform.usecase';
 import { FindByIdPlatformUseCase } from './aplication/usecases/findbyid.usecase';
@@ -14,6 +14,8 @@ import {
   HistoryPriceEntity,
   HistoryPriceProps,
 } from './domain/entities/history_price.entity';
+import { IPlatformRepository } from './repositories/platform.respository';
+import { PlatformCategory } from './domain/enums/platform.enum';
 
 @Injectable()
 export class PlatformService {
@@ -25,6 +27,8 @@ export class PlatformService {
     private readonly createHistoricalPriceUseCase: CreatePriceUseCase,
     private readonly getHistoricalPriceUseCase: FindHistoricalPriceByPlatformUseCase,
     private readonly updateHistoricalPriceUseCase: UpdatePricesUseCase,
+    @Inject('PlatformRepository')
+    private readonly platformRepository: IPlatformRepository,
   ) {}
 
   async create(platformData: PlatformProps): Promise<void> {
@@ -62,5 +66,15 @@ export class PlatformService {
   ): Promise<HistoryPriceEntity[] | null> {
     const prices = await this.getHistoricalPriceUseCase.execute(platformId);
     return prices;
+  }
+
+  async searchByName(name: string): Promise<PlatformEntity[]> {
+    return this.platformRepository.searchByName(name);
+  }
+
+  async filterByCategory(
+    category: PlatformCategory,
+  ): Promise<PlatformEntity[]> {
+    return this.platformRepository.filterByCategory(category);
   }
 }
