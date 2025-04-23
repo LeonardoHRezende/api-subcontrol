@@ -96,7 +96,8 @@ O sistema possui três entidades principais:
 
 A documentação da API está disponível através do Swagger quando o servidor estiver rodando:
 ```
-http://localhost:3000/api
+para a tipagem: http://localhost:3333/docs-json
+swagger: http://localhost:3333/docs
 ```
 
 ## 🤝 Contribuição
