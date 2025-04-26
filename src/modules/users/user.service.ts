@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { UserEntity } from './domain/entities/user.entity';
+import { UserEntity, TermsAcceptanceDto } from './domain/entities/user.entity';
 import { CreateUserUseCase } from './aplication/usecases/create-user.usecase';
 import { FindByIdUserUseCase } from './aplication/usecases/findbyid-user.usecase';
 import { UserProperties } from './domain/entities/user.entity';
 import { FindByEmailUserUseCase } from './aplication/usecases/findbyemail-user.usecase copy';
 import { UpdateUserUseCase } from './aplication/usecases/update-user.usecas';
 import { DeleteUserUseCase } from './aplication/usecases/delete-user.usecase';
+import { AcceptTermsUserUseCase } from './aplication/usecases/accept-terms-user.usecase';
 
 @Injectable()
 export class UsersService {
@@ -15,6 +16,7 @@ export class UsersService {
     private readonly findByEmailUserUseCase: FindByEmailUserUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,
     private readonly deleteUserUseCase: DeleteUserUseCase,
+    private readonly acceptTermsUserUseCase: AcceptTermsUserUseCase,
   ) {}
 
   async create(userData: UserProperties): Promise<UserEntity> {
@@ -36,5 +38,9 @@ export class UsersService {
 
   async delete(userId: string): Promise<void> {
     return this.deleteUserUseCase.execute(userId);
+  }
+
+  async acceptTerms(termsData: TermsAcceptanceDto): Promise<void> {
+    return this.acceptTermsUserUseCase.execute(termsData);
   }
 }

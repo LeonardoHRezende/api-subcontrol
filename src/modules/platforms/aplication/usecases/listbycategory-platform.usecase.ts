@@ -1,15 +1,16 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { IPlatformRepository } from '../../repositories/platform.respository';
 import { PlatformEntity } from '../../domain/entities/platform.entity';
+import { PlatformCategory } from '../../domain/enums/platform.enum';
 
 @Injectable()
-export class CreatePlatformUseCase {
+export class ListByCategoryPlatformUseCase {
   constructor(
     @Inject('PlatformRepository')
     private readonly platformRepository: IPlatformRepository,
   ) {}
 
-  async execute(platform: PlatformEntity): Promise<void> {
-    return await this.platformRepository.create(platform);
+  async execute(category: PlatformCategory): Promise<PlatformEntity[]> {
+    return this.platformRepository.filterByCategory(category);
   }
 }

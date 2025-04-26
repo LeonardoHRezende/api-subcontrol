@@ -20,6 +20,7 @@ export class SubPrismaRepository implements ISubRepository {
     return new SubscriptionEntity({
       id: subscription.id,
       plan: subscription.plan,
+      customPrice: subscription.customPrice ?? undefined,
       recurrence: subscription.recurrence,
       status: subscription.status,
       startDate: subscription.startDate,
@@ -60,6 +61,7 @@ export class SubPrismaRepository implements ISubRepository {
         new SubscriptionEntity({
           id: subscription.id,
           plan: subscription.plan,
+          customPrice: subscription.customPrice ?? undefined,
           recurrence: subscription.recurrence,
           status: subscription.status,
           startDate: subscription.startDate,

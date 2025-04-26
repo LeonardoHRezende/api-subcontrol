@@ -11,6 +11,7 @@ import { UpdateSubsUseCase } from './aplication/use-cases/update-subs.usecase';
 import { DeleteSubsUseCase } from './aplication/use-cases/delete-subs.usecase';
 import { FindUniqueSubsUseCase } from './aplication/use-cases/findunique-subs.usecase';
 import { ListSubsUseCase } from './aplication/use-cases/list-subs.usecase';
+import { CancelSubsUseCase } from './aplication/use-cases/cancel-subs.usecase';
 
 @Module({
   controllers: [SubsController],
@@ -25,6 +26,7 @@ import { ListSubsUseCase } from './aplication/use-cases/list-subs.usecase';
     DeleteSubsUseCase,
     FindUniqueSubsUseCase,
     ListSubsUseCase,
+    CancelSubsUseCase,
   ],
 })
 export class SubsModule {}

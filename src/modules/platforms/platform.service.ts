@@ -14,7 +14,10 @@ import {
   HistoryPriceEntity,
   HistoryPriceProps,
 } from './domain/entities/history_price.entity';
-
+import { PlatformCategory } from './domain/enums/platform.enum';
+import { ListByCategoryPlatformUseCase } from './aplication/usecases/listbycategory-platform.usecase';
+import { ListByNamePlatformUseCase } from './aplication/usecases/listbyname-platform.usecase';
+import { ListPlatformUseCase } from './aplication/usecases/list-platform.usecase';
 @Injectable()
 export class PlatformService {
   constructor(
@@ -25,6 +28,9 @@ export class PlatformService {
     private readonly createHistoricalPriceUseCase: CreatePriceUseCase,
     private readonly getHistoricalPriceUseCase: FindHistoricalPriceByPlatformUseCase,
     private readonly updateHistoricalPriceUseCase: UpdatePricesUseCase,
+    private readonly listPlatformUseCase: ListPlatformUseCase,
+    private readonly listByNamePlatformUseCase: ListByNamePlatformUseCase,
+    private readonly listByCategoryPlatformUseCase: ListByCategoryPlatformUseCase,
   ) {}
 
   async create(platformData: PlatformProps): Promise<void> {
@@ -51,7 +57,7 @@ export class PlatformService {
     return this.createHistoricalPriceUseCase.execute(historicalPrices);
   }
 
-  async updateePrice(prices: HistoryPriceProps): Promise<void> {
+  async updatePrice(prices: HistoryPriceProps): Promise<void> {
     const historicalPrices = new HistoryPriceEntity(prices);
 
     return this.updateHistoricalPriceUseCase.execute(historicalPrices);
@@ -62,5 +68,19 @@ export class PlatformService {
   ): Promise<HistoryPriceEntity[] | null> {
     const prices = await this.getHistoricalPriceUseCase.execute(platformId);
     return prices;
+  }
+
+  async listAll(): Promise<PlatformEntity[]> {
+    return this.listPlatformUseCase.execute();
+  }
+
+  async searchByName(name: string): Promise<PlatformEntity[]> {
+    return this.listByNamePlatformUseCase.execute(name);
+  }
+
+  async filterByCategory(
+    category: PlatformCategory,
+  ): Promise<PlatformEntity[]> {
+    return this.listByCategoryPlatformUseCase.execute(category);
   }
 }

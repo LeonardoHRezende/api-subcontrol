@@ -13,7 +13,9 @@ import { UpdatePlatformUseCase } from './aplication/usecases/update-platform.use
 import { FindHistoricalPriceByPlatformUseCase } from './aplication/usecases/findbyplatformid-prices.usecase';
 import { UpdatePricesUseCase } from './aplication/usecases/update-prices.usecase';
 import { CreatePriceUseCase } from './aplication/usecases/create-prices.usecase';
-
+import { ListByNamePlatformUseCase } from './aplication/usecases/listbyname-platform.usecase';
+import { ListByCategoryPlatformUseCase } from './aplication/usecases/listbycategory-platform.usecase';
+import { ListPlatformUseCase } from './aplication/usecases/list-platform.usecase';
 @Module({
   controllers: [PlatformsController],
   providers: [
@@ -29,6 +31,9 @@ import { CreatePriceUseCase } from './aplication/usecases/create-prices.usecase'
     FindHistoricalPriceByPlatformUseCase,
     UpdatePricesUseCase,
     CreatePriceUseCase,
+    ListPlatformUseCase,
+    ListByNamePlatformUseCase,
+    ListByCategoryPlatformUseCase,
   ],
 })
 export class PlatformsModule {}

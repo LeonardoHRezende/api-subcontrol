@@ -8,6 +8,7 @@ export interface SubscriptionProps {
   platformsId?: string;
   plan: string;
   tag?: string;
+  customPrice?: number;
   recurrence: SubRecurrence;
   status: SubStatus;
   startDate: Date;
@@ -22,6 +23,7 @@ export class SubscriptionEntity {
   platformsId?: string;
   plan: string;
   tag?: string;
+  customPrice?: number;
   recurrence: SubRecurrence;
   status: SubStatus;
   startDate: Date;
@@ -35,6 +37,7 @@ export class SubscriptionEntity {
     this.platformsId = props?.platformsId;
     this.plan = props?.plan;
     this.tag = props?.tag;
+    this.customPrice = props?.customPrice;
     this.recurrence = props?.recurrence ?? 'MONTHLY';
     this.status = props?.status ?? 'ACTIVE';
     this.startDate = props?.startDate;
@@ -48,6 +51,10 @@ export class SubscriptionEntity {
 
   get Plan(): string {
     return this.plan;
+  }
+
+  get CustomPrice(): number | undefined {
+    return this.customPrice;
   }
 
   get Recurrence(): SubRecurrence {
@@ -98,6 +105,7 @@ export class SubscriptionEntity {
       platformsId: this.platformsId,
       plan: this.plan,
       tag: this.tag,
+      customPrice: this.customPrice,
       recurrence: this.recurrence,
       status: this.status,
       startDate: this.startDate,
@@ -121,24 +129,67 @@ export class SubscriptionDTO {
   @ApiProperty()
   plan: string;
 
-  @ApiProperty()
-  tag: string;
+  @ApiProperty({ required: false })
+  tag?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
+  customPrice?: number;
+
+  @ApiProperty({ enum: ['MONTHLY', 'YEARLY'] })
   recurrence: SubRecurrence;
 
-  @ApiProperty()
+  @ApiProperty({ enum: ['ACTIVE', 'WARNING', 'CANCELED'] })
   status: SubStatus;
 
   @ApiProperty()
   startDate: Date;
 
-  @ApiProperty()
-  canceledAt: Date;
+  @ApiProperty({ required: false, nullable: true })
+  canceledAt?: Date;
 
-  @ApiProperty()
-  updatedAt: Date;
+  @ApiProperty({ required: false })
+  updatedAt?: Date;
 
-  @ApiProperty()
-  createdAt: Date;
+  @ApiProperty({ required: false })
+  createdAt?: Date;
+}
+
+export class UpdateSubscriptionDTO {
+  @ApiProperty({ required: false })
+  id?: string;
+
+  @ApiProperty({ required: false })
+  accountId?: string;
+
+  @ApiProperty({ required: false })
+  platformsId?: string;
+
+  @ApiProperty({ required: false })
+  plan?: string;
+
+  @ApiProperty({ required: false })
+  tag?: string;
+
+  @ApiProperty({ required: false })
+  customPrice?: number;
+
+  @ApiProperty({ enum: ['MONTHLY', 'YEARLY'], required: false })
+  recurrence?: SubRecurrence;
+
+  @ApiProperty({ enum: ['ACTIVE', 'WARNING', 'CANCELED'], required: false })
+  status?: SubStatus;
+
+  @ApiProperty({ required: false })
+  startDate?: Date;
+}
+
+export class CancelSubscriptionDTO {
+  @ApiProperty({ required: false })
+  id?: string;
+
+  @ApiProperty({
+    required: false,
+    description: 'Motivo opcional para o cancelamento da assinatura',
+  })
+  cancelReason?: string;
 }
