@@ -8,6 +8,7 @@ export interface SubscriptionProps {
   platformsId?: string;
   plan: string;
   tag?: string;
+  customPrice?: number;
   recurrence: SubRecurrence;
   status: SubStatus;
   startDate: Date;
@@ -22,6 +23,7 @@ export class SubscriptionEntity {
   platformsId?: string;
   plan: string;
   tag?: string;
+  customPrice?: number;
   recurrence: SubRecurrence;
   status: SubStatus;
   startDate: Date;
@@ -35,6 +37,7 @@ export class SubscriptionEntity {
     this.platformsId = props?.platformsId;
     this.plan = props?.plan;
     this.tag = props?.tag;
+    this.customPrice = props?.customPrice;
     this.recurrence = props?.recurrence ?? 'MONTHLY';
     this.status = props?.status ?? 'ACTIVE';
     this.startDate = props?.startDate;
@@ -48,6 +51,10 @@ export class SubscriptionEntity {
 
   get Plan(): string {
     return this.plan;
+  }
+
+  get CustomPrice(): number | undefined {
+    return this.customPrice;
   }
 
   get Recurrence(): SubRecurrence {
@@ -98,6 +105,7 @@ export class SubscriptionEntity {
       platformsId: this.platformsId,
       plan: this.plan,
       tag: this.tag,
+      customPrice: this.customPrice,
       recurrence: this.recurrence,
       status: this.status,
       startDate: this.startDate,
@@ -123,6 +131,9 @@ export class SubscriptionDTO {
 
   @ApiProperty({ required: false })
   tag?: string;
+
+  @ApiProperty({ required: false })
+  customPrice?: number;
 
   @ApiProperty({ enum: ['MONTHLY', 'YEARLY'] })
   recurrence: SubRecurrence;
@@ -158,6 +169,9 @@ export class UpdateSubscriptionDTO {
 
   @ApiProperty({ required: false })
   tag?: string;
+
+  @ApiProperty({ required: false })
+  customPrice?: number;
 
   @ApiProperty({ enum: ['MONTHLY', 'YEARLY'], required: false })
   recurrence?: SubRecurrence;

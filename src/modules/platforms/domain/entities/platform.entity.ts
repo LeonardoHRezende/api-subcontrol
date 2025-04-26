@@ -6,7 +6,6 @@ export interface PlatformProps {
   id?: string;
   name: string;
   category: PlatformCategory;
-  imageUrl: string;
   websiteUrl: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -17,7 +16,6 @@ export class PlatformEntity {
   id: string;
   name: string;
   category: PlatformCategory;
-  imageUrl: string;
   websiteUrl: string;
   createdAt: Date;
   updatedAt: Date;
@@ -27,7 +25,6 @@ export class PlatformEntity {
     this.id = props.id ?? randomUUID();
     this.name = props.name;
     this.category = props.category;
-    this.imageUrl = props.imageUrl;
     this.websiteUrl = props.websiteUrl;
     this.createdAt = props.createdAt ?? new Date();
     this.updatedAt = props.updatedAt ?? new Date();
@@ -42,9 +39,6 @@ export class PlatformEntity {
   }
   get Category(): PlatformCategory {
     return this.category;
-  }
-  get ImageUrl(): string {
-    return this.imageUrl;
   }
   get WebsiteUrl(): string {
     return this.websiteUrl;
@@ -64,7 +58,6 @@ export class PlatformEntity {
       id: this.id,
       name: this.name,
       category: this.category,
-      imageUrl: this.imageUrl,
       websiteUrl: this.websiteUrl,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
@@ -82,9 +75,6 @@ export class PlatformDTO {
 
   @ApiProperty()
   category: PlatformCategory;
-
-  @ApiProperty()
-  imageUrl: string;
 
   @ApiProperty()
   websiteUrl: string;
