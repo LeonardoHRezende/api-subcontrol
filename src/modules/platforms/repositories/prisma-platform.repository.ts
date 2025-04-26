@@ -24,7 +24,6 @@ export class PlatformPrismaRepository implements IPlatformRepository {
       id: platform.id,
       name: platform.name,
       category: platform.category,
-      imageUrl: platform.imageUrl,
       websiteUrl: platform.websiteUrl,
       createdAt: platform.createdAt,
       updatedAt: platform.updatedAt,
@@ -48,7 +47,6 @@ export class PlatformPrismaRepository implements IPlatformRepository {
           id: platform.id,
           name: platform.name,
           category: platform.category as PlatformCategory,
-          imageUrl: platform.imageUrl,
           websiteUrl: platform.websiteUrl,
           createdAt: platform.createdAt,
           updatedAt: platform.updatedAt,
@@ -72,7 +70,6 @@ export class PlatformPrismaRepository implements IPlatformRepository {
           id: platform.id,
           name: platform.name,
           category: platform.category as PlatformCategory,
-          imageUrl: platform.imageUrl,
           websiteUrl: platform.websiteUrl,
           createdAt: platform.createdAt,
           updatedAt: platform.updatedAt,
@@ -114,7 +111,7 @@ export class PlatformPrismaRepository implements IPlatformRepository {
     historicalPrice: HistoryPriceEntity,
   ): Promise<void> {
     await this.prisma.platforms_history_prices.update({
-      where: { id: historicalPrice.Id },
+      where: { id: historicalPrice.id },
       data: { ...historicalPrice.toObject() },
     });
   }
@@ -137,6 +134,22 @@ export class PlatformPrismaRepository implements IPlatformRepository {
           createdAt: p.createdAt,
           updatedAt: p.updatedAt,
           platformId: p.platformId,
+        }),
+    );
+  }
+
+  async listAll(): Promise<PlatformEntity[]> {
+    const platforms = await this.prisma.platforms.findMany();
+    return platforms.map(
+      (p) =>
+        new PlatformEntity({
+          id: p.id,
+          name: p.name,
+          category: p.category as PlatformCategory,
+          websiteUrl: p.websiteUrl,
+          createdAt: p.createdAt,
+          updatedAt: p.updatedAt,
+          canceledAt: p.canceledAt!,
         }),
     );
   }

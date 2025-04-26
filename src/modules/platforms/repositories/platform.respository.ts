@@ -9,7 +9,7 @@ export interface IPlatformRepository {
   delete(id: string): Promise<void>;
   searchByName(name: string): Promise<PlatformEntity[]>;
   filterByCategory(category: PlatformCategory): Promise<PlatformEntity[]>;
-
+  listAll(): Promise<PlatformEntity[]>;
   createHistoricalPrice(historicalPrice: HistoryPriceEntity): Promise<void>;
   findHistoricalPriceByPlatformId(
     platformId: string,
@@ -89,5 +89,10 @@ export class PlatformRepository implements IPlatformRepository {
     if (index !== -1) {
       this.historicalPrices[index] = historicalPrice;
     }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async listAll(): Promise<PlatformEntity[]> {
+    return this.platforms;
   }
 }
