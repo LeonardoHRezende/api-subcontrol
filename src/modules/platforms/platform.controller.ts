@@ -16,7 +16,7 @@ import { HistoryPriceDTO } from './domain/entities/history_price.entity';
 import { PlatformCategory } from './domain/enums/platform.enum';
 
 @ApiTags('Plataformas')
-@Controller('platform')
+@Controller('platforms')
 export class PlatformsController {
   constructor(private readonly platformService: PlatformService) {}
 
@@ -26,7 +26,7 @@ export class PlatformsController {
     return this.platformService.create(body);
   }
 
-  @Get(':id')
+  @Get('/unique/:id')
   @ApiOperation({ summary: 'Buscar plataforma por ID' })
   @ApiResponse({
     status: 200,
@@ -53,7 +53,7 @@ export class PlatformsController {
     return this.platformService.searchByName(name);
   }
 
-  @Get('filter/category')
+  @Get('search/category')
   @ApiOperation({ summary: 'Filtrar plataformas por categoria' })
   @ApiQuery({
     name: 'category',
@@ -90,6 +90,17 @@ export class PlatformsController {
     return this.platformService.filterByCategory(category);
   }
 
+  @Get('list')
+  @ApiOperation({ summary: 'Buscar todas as plataformas' })
+  @ApiResponse({
+    status: 200,
+    description: 'Lista de todas as plataformas',
+    type: [PlatformDTO],
+  })
+  async findAll(): Promise<PlatformDTO[]> {
+    return this.platformService.listAll();
+  }
+
   @Put()
   @ApiOperation({ summary: 'Atualizar plataforma' })
   async update(@Body() body: PlatformDTO) {
@@ -124,6 +135,6 @@ export class PlatformsController {
   @Put('/price')
   @ApiOperation({ summary: 'Atualizar preço histórico' })
   async updatePrices(@Body() body: HistoryPriceDTO) {
-    return this.platformService.updateePrice(body);
+    return this.platformService.updatePrice(body);
   }
 }
